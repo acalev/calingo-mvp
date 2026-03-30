@@ -55,13 +55,39 @@
       color: #6b7280;
       font-size: 14px;
     }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="section">
       <h1>Calingo MVP</h1>
-      <p>This page is now connected to Supabase.</p>
+      <p>This page can now read and add profiles.</p>
+
+      <div class="card">
+        <h2>Add student</h2>
+
+        <input id="full_name" type="text" placeholder="Full name" />
+        <input id="email" type="email" placeholder="Email" />
+        <input id="role" type="text" value="student" />
+
+        <button class="button" onclick="addProfile()">Add student</button>
+        <p id="addMessage" class="message small"></p>
+      </div>
 
       <div class="card">
         <h2>Profiles from database</h2>
@@ -96,10 +122,29 @@
         return;
       }
 
-      output.innerHTML = data.map(profile => {
-  const displayName = profile.name || profile.full_name || profile.username || "No name";
-  return `${displayName} — ${profile.email} — ${profile.role}`;
-}).join("<br>");
+      output.innerHTML = data.map(profile =>
+        `${profile.full_name} — ${profile.email} — ${profile.role}`
+      ).join("<br>");
+    }
+
+    async function addProfile() {
+      const full_name = document.getElementById("full_name").value;
+      const email = document.getElementById("email").value;
+      const role = document.getElementById("role").value;
+      const addMessage = document.getElementById("addMessage");
+
+      addMessage.textContent = "Saving...";
+
+      const { error } = await supabaseClient
+        .from("profiles")
+        .insert([{ full_name, email, role }]);
+
+      if (error) {
+        addMessage.textContent = "Error: " + error.message;
+        return;
+      }
+
+      addMessage.textContent = "Student added successfully.";
     }
   </script>
 </body>
