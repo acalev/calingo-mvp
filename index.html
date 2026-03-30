@@ -113,13 +113,17 @@
         .select("*");
 
       if (error) {
-        output.textContent = "Error: " + error.message;
-        return;
-      }
+  addMessage.textContent = "Error: " + error.message;
+  return;
+}
 
-      if (!data || data.length === 0) {
-        output.textContent = "No profiles found.";
-        return;
+addMessage.textContent = "Student added successfully.";
+
+document.getElementById("full_name").value = "";
+document.getElementById("email").value = "";
+document.getElementById("role").value = "student";
+
+loadProfiles();
       }
 
       output.innerHTML = data.map(profile =>
