@@ -55,6 +55,8 @@
       border-radius: 10px;
       text-decoration: none;
       font-weight: bold;
+      border: none;
+      cursor: pointer;
     }
 
     .grid {
@@ -79,6 +81,15 @@
     .small {
       color: #6b7280;
       font-size: 14px;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 16px;
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      border-radius: 12px;
+      display: none;
     }
   </style>
 </head>
@@ -105,21 +116,23 @@
         <div class="card">
           <h3>Level Test</h3>
           <p>Current status: Not started</p>
-          <a class="button" href="#">Start test</a>
+          <button class="button" onclick="showMessage('Level test started')">Start test</button>
         </div>
 
         <div class="card">
           <h3>Book a Lesson</h3>
           <p>Next available slot: Tuesday, 18:00</p>
-          <a class="button" href="#">Book now</a>
+          <button class="button" onclick="showMessage('Lesson booking opened')">Book now</button>
         </div>
 
         <div class="card">
           <h3>Flashcards</h3>
           <p>12 words ready for review</p>
-          <a class="button" href="#">Study words</a>
+          <button class="button" onclick="showMessage('Flashcards opened')">Study words</button>
         </div>
       </div>
+
+      <div id="messageBox" class="message"></div>
     </div>
 
     <div class="section" id="teachers">
@@ -142,5 +155,13 @@
       </ul>
     </div>
   </div>
+
+  <script>
+    function showMessage(text) {
+      const box = document.getElementById('messageBox');
+      box.style.display = 'block';
+      box.textContent = text;
+    }
+  </script>
 </body>
 </html>
