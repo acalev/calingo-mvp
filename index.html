@@ -96,9 +96,10 @@
         return;
       }
 
-      output.innerHTML = data.map(profile =>
-        `${profile.name} — ${profile.email} — ${profile.role}`
-      ).join("<br>");
+      output.innerHTML = data.map(profile => {
+  const displayName = profile.name || profile.full_name || profile.username || "No name";
+  return `${displayName} — ${profile.email} — ${profile.role}`;
+}).join("<br>");
     }
   </script>
 </body>
