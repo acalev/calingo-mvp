@@ -113,43 +113,10 @@
         .select("*");
 
       if (error) {
-  addMessage.textContent = "Error: " + error.message;
-  return;
-}
-
-addMessage.textContent = "Student added successfully.";
-
-document.getElementById("full_name").value = "";
-document.getElementById("email").value = "";
-document.getElementById("role").value = "student";
-
-loadProfiles();
-      }
-
-      output.innerHTML = data.map(profile =>
-        `${profile.full_name} — ${profile.email} — ${profile.role}`
-      ).join("<br>");
-    }
-
-    async function addProfile() {
-      const full_name = document.getElementById("full_name").value;
-      const email = document.getElementById("email").value;
-      const role = document.getElementById("role").value;
-      const addMessage = document.getElementById("addMessage");
-
-      addMessage.textContent = "Saving...";
-
-      const { error } = await supabaseClient
-        .from("profiles")
-        .insert([{ full_name, email, role }]);
-
-      if (error) {
-        addMessage.textContent = "Error: " + error.message;
+        output.textContent = "Error: " + error.message;
         return;
       }
 
-      addMessage.textContent = "Student added successfully.";
-    }
-  </script>
-</body>
-</html>
+      if (!data || data.length === 0) {
+        output.textContent = "No profiles found.";
+        
